@@ -25,6 +25,10 @@ const API = {
             headers: this.headers,
             body: formData
         });
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText);
+        }
         return await response.json();
     },
 
@@ -33,6 +37,10 @@ const API = {
             method: 'DELETE',
             headers: this.headers
         });
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText);
+        }
         return await response.json();
     },
 
@@ -43,6 +51,10 @@ const API = {
             headers: this.headers,
             body: formData
         });
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText);
+        }
         return await response.json();
     },
 
@@ -56,6 +68,10 @@ const API = {
             },
             body: JSON.stringify({ name })
         });
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText);
+        }
         return await response.json();
     }
 };

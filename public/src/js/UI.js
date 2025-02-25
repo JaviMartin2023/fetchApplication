@@ -29,8 +29,9 @@ export function renderAlbums(data, currentFilters = {}) {
                     <h5 class="card-title">${album.title}</h5>
                     <p class="card-text">
                         Cantante: ${album.singer.name}<br>
-                        Año: ${album.date}<br>
-                        Rating: ${album.rating}/10
+                        Año de salida: ${album.year}<br>
+                        Número de canciones: ${album.number_of_songs}<br>
+                        Rating: ${album.rating} ⭐​
                     </p>
                     <button class="btn btn-warning btn-sm edit-album" data-id="${album.id}">Editar</button>
                     <button class="btn btn-danger btn-sm delete-album" data-id="${album.id}">Eliminar</button>

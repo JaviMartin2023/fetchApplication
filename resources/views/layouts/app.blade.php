@@ -7,41 +7,48 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
-        /* Navbar personalizado */
+        /* Fondo general */
+        body {
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
+            color: white;
+        }
+
+        /* Navbar Glassmorphism */
         .navbar-custom {
-            background-color: #343a40;
-            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 10px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
-        .navbar-custom .navbar-brand {
-            color: #ffffff;
-        }
-        .navbar-custom .navbar-brand:hover {
-            color: #ffc107;
-        }
+        .navbar-custom .navbar-brand,
         .navbar-custom .nav-link {
-            color: #ffffff;
+            color: white;
+            transition: color 0.3s ease;
         }
+        .navbar-custom .navbar-brand:hover,
         .navbar-custom .nav-link:hover {
             color: #ffc107;
         }
 
         /* Footer estilizado */
         .footer {
-            background-color: #343a40;
-            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
         }
         .footer a {
             color: #ffc107;
             text-decoration: none;
         }
         .footer a:hover {
-            color: #ffffff;
+            color: white;
         }
 
         /* Contenido principal */
         .main-content {
-            padding-top: 60px;
+            padding-top: 70px;
         }
     </style>
 </head>
@@ -49,22 +56,11 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">🎵​ Music Hub</a>
+            <a class="navbar-brand fw-bold" href="#">🎵​ Music Hub</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('albums.index') }}">Álbumes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('singers.index') }}">Cantantes</a>
-                    </li>
-                </ul>
             </div>
         </div>
     </nav>
@@ -75,7 +71,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer mt-5 text-center">
+    <footer class="footer text-light">
         <div class="container">
             &copy; 2025 Fco. Javier Martín Mariscal | Todos los derechos reservados
         </div>

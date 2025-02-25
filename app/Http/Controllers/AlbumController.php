@@ -27,7 +27,7 @@ class AlbumController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'year' => 'required|integer',
+            'year' => 'required|integer|min:1900|max:' . date('Y'),
             'rating' => 'required|integer|min:1|max:10',
             'number_of_songs' => 'required|integer|min:1',
             'singer_id' => 'required|exists:singers,id'
@@ -41,7 +41,7 @@ class AlbumController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'year' => 'required|integer',
+            'year' => 'required|integer|min:1900|max:' . date('Y'),
             'rating' => 'required|integer|min:1|max:10',
             'number_of_songs' => 'required|integer|min:1',
             'singer_id' => 'required|exists:singers,id'
