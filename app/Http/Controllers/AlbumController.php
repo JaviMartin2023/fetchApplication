@@ -1,63 +1,59 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Album;
-use App\Models\Singer;
 use Illuminate\Http\Request;
 
 class AlbumController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $albums = Album::with('singer')->get();
-        return view('albums.index', compact('albums'));
-    }
+        $query = Album::with('singer');
 
-    public function create()
-    {
-        $singers = Singer::all();
-        return view('albums.create', compact('singers'));
+        if ($request->has('sort')) {
+            $query->orderBy('title', $request->sort);
+        }
+
+        if ($request->has('singer_id')) {
+            $query->where('singer_id', $request->singer_id);
+        }
+
+        $albums = $query->paginate(6);
+        return response()->json($albums);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'singer_id' => 'required|exists:singers,id',
             'year' => 'required|integer',
-            'number_of_songs' => 'required|integer',
-            'rating' => 'required|numeric|min:0|max:10',
+            'rating' => 'required|integer|min:1|max:10',
+            'number_of_songs' => 'required|integer|min:1',
+            'singer_id' => 'required|exists:singers,id'
         ]);
 
-        $album = Album::create($request->all());
-        return redirect()->route('albums.index');
+        $album = Album::create($validated);
+        return response()->json($album->load('singer'));
     }
 
-    public function edit($id)
+    public function update(Request $request, Album $album)
     {
-        $album = Album::find($id);
-        $singers = Singer::all();
-        return view('albums.edit', compact('album', 'singers'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'singer_id' => 'required|exists:singers,id',
             'year' => 'required|integer',
-            'number_of_songs' => 'required|integer',
-            'rating' => 'required|numeric|min:0|max:10',
+            'rating' => 'required|integer|min:1|max:10',
+            'number_of_songs' => 'required|integer|min:1',
+            'singer_id' => 'required|exists:singers,id'
         ]);
 
-        $album = Album::find($id);
-        $album->update($request->all());
-        return redirect()->route('albums.index');
+        $album->update($validated);
+        return response()->json($album->load('singer'));
     }
 
-    public function destroy($id)
+    public function destroy(Album $album)
     {
-        Album::destroy($id);
-        return redirect()->route('albums.index');
+        $album->delete();
+        return response()->json(['message' => 'Álbum eliminado']);
     }
 }
